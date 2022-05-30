@@ -8,3 +8,6 @@ get: function(address: string, key: string) -> expected<payload, error>
 
 // Set key to value. If key alreads holds a value, it is overwritten.
 set: function(address: string, key: string, value: payload) -> expected<_, error>
+
+// increments the value of a key by the given value. If the key does not exist, it is set to the given value.
+incr: function(address: string, key: string, value: payload) -> expected<payload, error>

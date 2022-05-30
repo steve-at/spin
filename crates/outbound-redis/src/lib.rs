@@ -55,4 +55,14 @@ impl outbound_redis::OutboundRedis for OutboundRedis {
         conn.set(key, value).map_err(|_| Error::Error)?;
         Ok(())
     }
+    
+    fn incr(&mut self, address: &str, key: &str, value: &[u8]) -> Result<Vec<u8>, Error> {
+        let client = redis::Client::open(address).map_err(|_| Error::Error)?;
+        let mut conn = client.get_connection().map_err(|_| Error::Error)?;
+        let value: i64 = conn.incr(key, value).map_err(|_| Error::Error)?;
+        //  converts the value to a Vec<u8>
+        let new_value = value.to_string().into_bytes();
+        Ok(new_value)
+    }
+    
 }
