@@ -15,3 +15,6 @@ incr: func(address: string, key: string) -> expected<s64, error>
 
 // Removes the specified keys. A key is ignored if it does not exist.
 del: func(address: string, keys: list<string>) -> expected<s64, error>
+
+// Set key to value with an expiration time in seconds. If key alreads holds a value, it is overwritten.
+setex: func(address: string, key: string, value: payload, ex: u32) -> expected<unit, error>
