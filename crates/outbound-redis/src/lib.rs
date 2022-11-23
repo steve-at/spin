@@ -47,6 +47,13 @@ impl outbound_redis::OutboundRedis for OutboundRedis {
         let value = conn.del(keys).await.map_err(log_error)?;
         Ok(value)
     }
+    
+    
+    async fn setex(&mut self, address: &str, key: &str, value: &[u8], ex: u32) -> Result<(), Error> {
+        let conn = self.get_conn(address).await.map_err(log_error)?;
+        conn.set_ex(key, value, ex as usize).await.map_err(log_error)?;
+        Ok(())
+    }
 }
 
 impl OutboundRedis {
